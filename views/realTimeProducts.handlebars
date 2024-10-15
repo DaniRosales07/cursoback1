@@ -1,0 +1,39 @@
+<h1>{{title}}</h1>
+
+<!-- Lista de productos -->
+<ul id="products-list"></ul>
+
+<!-- Formulario para agregar productos -->
+<form id="product-form">
+  <input type="text" id="product-name" placeholder="Nombre del producto" required />
+  <button type="submit">Agregar Producto</button>
+</form>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+
+  // Actualizar la lista de productos
+  socket.on('updateProducts', (products) => {
+    const list = document.getElementById('products-list');
+    list.innerHTML = ''; // Limpiar lista
+    products.forEach((product, index) => {
+      const li = document.createElement('li');
+      li.textContent = product;
+      const deleteButton = document.createElement('button');
+      deleteButton.textContent = 'Eliminar';
+      deleteButton.onclick = () => socket.emit('deleteProduct', index);
+      li.appendChild(deleteButton);
+      list.appendChild(li);
+    });
+  });
+
+  // Enviar nuevo producto al servidor
+  const form = document.getElementById('product-form');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const productName = document.getElementById('product-name').value;
+    socket.emit('newProduct', productName);
+    form.reset();
+  });
+</script>
