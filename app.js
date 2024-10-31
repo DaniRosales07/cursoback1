@@ -4,6 +4,19 @@ import viewsRouter from './routes/viewsRouter.js';
 import http from 'http';
 import { Server } from 'socket.io';
 
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+
+import productsRouter from './routes/productsRouter.js';
+
+import cartsRouter from './routes/cartsRouter.js';
+
+import connectDB from './config.js';
+
+dotenv.config();
+
+connectDB();
+
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
@@ -39,3 +52,8 @@ const PORT = 8080;
 server.listen(PORT, () => {
   console.log('Servidor corriendo en http://localhost:${PORT}');
 });
+
+app.use('/api/products', productsRouter);
+app.use('/api/carts', cartsRouter);
+
+

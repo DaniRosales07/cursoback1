@@ -1,6 +1,17 @@
 <h1>{{title}}</h1>
 <ul>
   {{#each products}}
-    <li>{{this}}</li>
+    <li>{{this.name}} - ${{this.price}} 
+      <button onclick="addToCart('{{this._id}}')">Agregar al carrito</button>
+    </li>
   {{/each}}
 </ul>
+
+<script>
+  async function addToCart(productId) {
+      await fetch(/api/carts/YOUR_CART_ID/products/${productId}, {
+          method: 'POST'
+      });
+      alert('Producto agregado al carrito');
+  }
+</script>
