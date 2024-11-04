@@ -29,7 +29,7 @@ app.set('views', './views');
 
 app.use(express.json());
 app.use(express.static('public'));
-app.use('/', viewsRouter); // Rutas
+app.use('/', viewsRouter);
 
 io.on('connection', (socket) => {
   console.log('Cliente conectado');

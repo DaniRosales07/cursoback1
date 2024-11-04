@@ -1,10 +1,8 @@
-// routes/productsRouter.js
 import { Router } from 'express';
 import Product from '../models/Product.js';
 
 const router = Router();
 
-// GET /api/products - Obtener productos con filtros y paginación
 router.get('/', async (req, res) => {
   try {
     const { limit = 10, page = 1, sort, query } = req.query;
@@ -35,7 +33,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-// POST /api/products - Crear un producto nuevo
 router.post('/', async (req, res) => {
   try {
     const product = new Product(req.body);
